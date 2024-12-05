@@ -1,6 +1,6 @@
-const { run } = require('../src/categories/toy/helloWorld');
+const { run } = require('../../src/categories/toy/helloWorld');
 
-describe('Hello World Model', () => {
+describe('Hello World', () => {
   test('Returns default greeting', async () => {
     const result = await run({});
     expect(result).toBe('Hello, World!');

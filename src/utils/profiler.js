@@ -1,25 +1,13 @@
-function profile(func, params) {
-    const startMemory = process.memoryUsage();
-    const startTime = process.hrtime();
-  
-    return func(params)
-      .then(() => {
-        const endMemory = process.memoryUsage();
-        const endTime = process.hrtime(startTime);
-  
-        const memoryUsage = {
-          rss: (endMemory.rss - startMemory.rss) / 1024 / 1024, // Memory in MB
-          heapUsed: (endMemory.heapUsed - startMemory.heapUsed) / 1024 / 1024,
-        };
-  
-        const cpuTime = (endTime[0] * 1e3 + endTime[1] / 1e6).toFixed(2); // CPU time in ms
-        console.log('Profiler Results:', { memoryUsage, cpuTime });
-        return { memoryUsage, cpuTime };
-      })
-      .catch((error) => {
-        throw new Error(`Profiling failed: ${error.message}`);
-      });
+async function profile(func, params) {
+    const start = process.hrtime();
+    const memoryStart = process.memoryUsage();
+    await func(params);
+    const memoryEnd = process.memoryUsage();
+    const timeEnd = process.hrtime(start);
+    console.log('Profiler Results:', {
+      memoryUsed: memoryEnd.heapUsed - memoryStart.heapUsed,
+      timeTaken: `${timeEnd[0]}s ${timeEnd[1] / 1e6}ms`,
+    });
   }
-  
   module.exports = { profile };
   
