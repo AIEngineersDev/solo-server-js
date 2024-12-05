@@ -1,4 +1,5 @@
-test/
+tests/
+benchmarks/
+profiles/
 node_modules/
 *.log
-.env
